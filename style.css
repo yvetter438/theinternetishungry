@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ece8e1 0%, #e5e0d8 100%);
+    font-family: Arial, sans-serif;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#poster-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ring-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* Rotation animations */
+@keyframes rotateClockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotateCounterClockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.ring-container.clockwise {
+    animation: rotateClockwise 60s linear infinite;
+}
+
+.ring-container.counterclockwise {
+    animation: rotateCounterClockwise 60s linear infinite;
+}
+
+.poster {
+    position: absolute;
+    width: 120px;
+    height: 180px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.poster:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
+
+.foreground {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.site-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #0000EE;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    cursor: pointer;
+    pointer-events: all;
+    transition: color 0.2s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 90%;
+}
+
+.site-title:hover {
+    color: #551A8B;
+}
+
+.site-title:visited {
+    color: #551A8B;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .site-title {
+        font-size: 3rem;
+    }
+    
+    .poster {
+        width: 100px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-title {
+        font-size: 2rem;
+    }
+    
+    .poster {
+        width: 80px;
+        height: 120px;
+    }
+}
+
