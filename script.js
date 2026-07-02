@@ -1,118 +1,119 @@
-// Configuration for concentric circles
-const config = {
-    rings: 5,
-    postersPerRing: [5, 10, 9], // Number of posters in each ring (inner to outer) - 25 total posters
-    baseRadius: 220, // Starting radius for innermost ring
-    radiusIncrement: 200, // Space between rings - increased to prevent radial overlap
-    posterWidth: 120,
-    posterHeight: 180,
-    staggerAmount: 0, // No random stagger to prevent overlap
-    totalPosters: 25 // Total number of poster images available
+/**
+ * Demo mockup videos — each file includes the phone frame + white border.
+ * Drop new .mov / .mp4 files in demos/ and add an entry below.
+ */
+const demos = [
+    {
+        title: "Demo 01",
+        description: "Video menu · mobile scroll",
+        src: "demos/mockup-1.mp4"
+    },
+    {
+        title: "Demo 02",
+        description: "Video menu · dish spotlight",
+        src: "demos/mockup-2.mp4"
+    },
+    {
+        title: "Demo 03",
+        description: "Video menu · full experience",
+        src: "demos/mockup-3.mp4"
+    }
+];
+
+const heroDemo = {
+    src: "demos/mockup-1.mp4"
 };
 
-
-function createPoster(x, y, index, angle) {
-    const poster = document.createElement('div');
-    poster.className = 'poster';
-    
-    // Create img element with actual poster images
-    const img = document.createElement('img');
-    // Loop through the 25 posters (1-25)
-    const posterNumber = (index % config.totalPosters) + 1;
-    img.src = `posters/${posterNumber}.png`;
-    img.alt = `Poster ${posterNumber}`;
-    
-    poster.appendChild(img);
-    
-    // Position the poster (centered on the calculated point)
-    poster.style.left = `${x - config.posterWidth / 2}px`;
-    poster.style.top = `${y - config.posterHeight / 2}px`;
-    
-    // Rotate poster to point radially outward (convert angle from radians to degrees)
-    const rotationDegrees = (angle * 180 / Math.PI) + 180; // +180 to align with radius and add 90 degree turn
-    poster.style.transform = `rotate(${rotationDegrees}deg)`;
-    
-    return poster;
+function createVideoElement(videoConfig, placeholderLabel, preload = "metadata") {
+    const video = document.createElement("video");
+    video.src = videoConfig.src;
+    video.playsInline = true;
+    video.muted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.preload = preload;
+    if (videoConfig.poster) video.poster = videoConfig.poster;
+    video.setAttribute("aria-label", placeholderLabel);
+    return video;
 }
 
-function generateConcentricCircles() {
-    const container = document.getElementById('poster-container');
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    
-    let posterIndex = 0;
-    
-    for (let ring = 0; ring < config.rings; ring++) {
-        // Create a container for this ring
-        const ringContainer = document.createElement('div');
-        ringContainer.className = 'ring-container';
-        
-        // Alternate rotation direction - even rings clockwise, odd counterclockwise
-        if (ring % 2 === 0) {
-            ringContainer.classList.add('clockwise');
-        } else {
-            ringContainer.classList.add('counterclockwise');
-        }
-        
-        // Set transform origin to center of screen
-        ringContainer.style.transformOrigin = `${centerX}px ${centerY}px`;
-        
-        const radius = config.baseRadius + (ring * config.radiusIncrement);
-        const postersInRing = config.postersPerRing[ring];
-        const angleStep = (2 * Math.PI) / postersInRing;
-        
-        for (let i = 0; i < postersInRing; i++) {
-            // Calculate angle evenly distributed
-            const angle = i * angleStep;
-            
-            // Use exact radius - no variation to prevent overlap
-            const actualRadius = radius;
-            
-            // Calculate position
-            const x = centerX + Math.cos(angle) * actualRadius;
-            const y = centerY + Math.sin(angle) * actualRadius;
-            
-            // Create and add poster (pass angle for radial rotation)
-            const poster = createPoster(x, y, posterIndex, angle);
-            
-            ringContainer.appendChild(poster);
-            posterIndex++;
-        }
-        
-        container.appendChild(ringContainer);
+function createMockup(videoConfig, placeholderLabel, preload = "metadata") {
+    const mockup = document.createElement("div");
+    mockup.className = "phone-mockup";
+
+    if (videoConfig.src) {
+        mockup.appendChild(createVideoElement(videoConfig, placeholderLabel, preload));
+    } else {
+        mockup.innerHTML = `
+            <div class="phone-placeholder">
+                <span class="placeholder-icon">▶</span>
+                <span>${placeholderLabel}</span>
+            </div>
+        `;
     }
+
+    return mockup;
 }
 
-// Handle window resize
-function handleResize() {
-    const container = document.getElementById('poster-container');
-    container.innerHTML = '';
-    generateConcentricCircles();
-}
+function renderWorkGrid() {
+    const grid = document.getElementById("workGrid");
+    if (!grid) return;
 
-// Initialize
-window.addEventListener('load', generateConcentricCircles);
-window.addEventListener('resize', debounce(handleResize, 250));
+    grid.innerHTML = "";
 
-// Debounce function to limit resize calls
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+    demos.forEach((demo, i) => {
+        const card = document.createElement("article");
+        card.className = "work-card";
 
-// Handle link click - redirects to Crave website
-document.addEventListener('DOMContentLoaded', () => {
-    const siteTitle = document.getElementById('siteTitle');
-    siteTitle.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = 'https://crave.food';
+        const meta = document.createElement("div");
+        meta.className = "work-card-meta";
+        meta.innerHTML = `<h3>${demo.title}</h3><p>${demo.description}</p>`;
+
+        const label = demo.src ? demo.title : `Upload demo ${String(i + 1).padStart(2, "0")}`;
+        const mockup = createMockup({ src: demo.src, poster: demo.poster }, label);
+
+        card.appendChild(mockup);
+        card.appendChild(meta);
+        grid.appendChild(card);
     });
-});
+}
 
+function renderHeroVideo() {
+    const heroMockup = document.getElementById("heroMockup");
+    if (!heroMockup) return;
+
+    heroMockup.innerHTML = "";
+    heroMockup.appendChild(
+        createVideoElement(heroDemo, "Video menu demo", "auto")
+    );
+}
+
+function initNav() {
+    const toggle = document.querySelector(".nav-toggle");
+    const header = document.querySelector(".site-header");
+
+    toggle?.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        header.classList.toggle("nav-open", !expanded);
+    });
+
+    document.querySelectorAll(".nav a").forEach(link => {
+        link.addEventListener("click", () => {
+            toggle?.setAttribute("aria-expanded", "false");
+            header?.classList.remove("nav-open");
+        });
+    });
+}
+
+function initFooter() {
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderHeroVideo();
+    renderWorkGrid();
+    initNav();
+    initFooter();
+});
