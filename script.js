@@ -4,17 +4,17 @@
  */
 const demos = [
     {
-        title: "Demo 01",
+        title: "Chuan Hause",
         description: "Video menu · mobile scroll",
         src: "demos/mockup-1.mp4"
     },
     {
-        title: "Demo 02",
+        title: "Shake & Stack Burgers",
         description: "Video menu · dish spotlight",
         src: "demos/mockup-2.mp4"
     },
     {
-        title: "Demo 03",
+        title: "Thai 2go",
         description: "Video menu · full experience",
         src: "demos/mockup-3.mp4"
     }
