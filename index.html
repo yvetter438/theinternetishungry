@@ -101,8 +101,8 @@
             </ol>
         </section>
 
-        <section class="section">
-            <div class="split">
+        <section class="section section--evolution">
+            <div class="evolution-layout">
                 <div class="split-copy">
                     <p class="eyebrow">Why video menus</p>
                     <h2>Static PDFs don't sell the sizzle</h2>
@@ -118,21 +118,82 @@
                         <li>One link — table, takeout bag, Instagram bio</li>
                     </ul>
                 </div>
-                <div class="split-visual">
-                    <div class="compare-card compare-card--old">
-                        <span class="compare-label">Before</span>
-                        <div class="compare-content">
-                            <div class="text-line"></div>
-                            <div class="text-line text-line--short"></div>
-                            <div class="text-line"></div>
-                            <div class="text-line text-line--medium"></div>
-                            <div class="text-line text-line--short"></div>
+
+                <div class="evolution-showcase">
+                    <div class="menu-evolution" aria-label="Menu format examples">
+                        <div class="evolution-step">
+                            <span class="evolution-label">Text menu</span>
+                            <div class="evolution-card">
+                                <div class="evolution-placeholder evolution-placeholder--text">
+                                    <div class="text-line"></div>
+                                    <div class="text-line text-line--short"></div>
+                                    <div class="text-line"></div>
+                                    <div class="text-line text-line--medium"></div>
+                                    <div class="text-line text-line--short"></div>
+                                    <div class="text-line text-line--medium"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="evolution-arrow" aria-hidden="true">→</span>
+
+                        <div class="evolution-step">
+                            <span class="evolution-label">Picture menu</span>
+                            <div class="evolution-card">
+                                <div class="evolution-placeholder evolution-placeholder--picture">
+                                    <div class="picture-block picture-block--wide"></div>
+                                    <div class="picture-row">
+                                        <div class="picture-block"></div>
+                                        <div class="picture-block"></div>
+                                    </div>
+                                    <div class="text-line text-line--short"></div>
+                                    <div class="picture-block picture-block--wide"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="evolution-arrow" aria-hidden="true">→</span>
+
+                        <div class="evolution-step evolution-step--highlight">
+                            <span class="evolution-label">Video menu</span>
+                            <div class="evolution-card">
+                                <div class="evolution-placeholder evolution-placeholder--video">
+                                    <span class="play-badge">▶</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="compare-card compare-card--new">
-                        <span class="compare-label">After</span>
-                        <div class="compare-content compare-content--video">
-                            <span class="play-badge">▶</span>
+
+                    <div class="evolution-example">
+                        <p class="evolution-dish">Krapow Moo Grob</p>
+                        <div class="menu-evolution menu-evolution--real" aria-label="Krapow Moo Grob menu evolution">
+                            <div class="evolution-step">
+                                <span class="evolution-label">Text menu</span>
+                                <div class="evolution-card">
+                                    <div class="evolution-text-sample">
+                                        <h4>Krapow Moo Grob</h4>
+                                        <p>Crispy pork belly, holy basil, chili &amp; garlic. Served over rice with fried egg.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="evolution-arrow" aria-hidden="true">→</span>
+
+                            <div class="evolution-step">
+                                <span class="evolution-label">Picture menu</span>
+                                <div class="evolution-card">
+                                    <img src="images/evolution/krapow-moo-grob.jpg" alt="Krapow Moo Grob — picture menu">
+                                </div>
+                            </div>
+
+                            <span class="evolution-arrow" aria-hidden="true">→</span>
+
+                            <div class="evolution-step evolution-step--highlight">
+                                <span class="evolution-label">Video menu</span>
+                                <div class="evolution-card">
+                                    <video src="images/evolution/krapow-moo-grob.mp4" autoplay muted loop playsinline aria-label="Krapow Moo Grob — video menu"></video>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
