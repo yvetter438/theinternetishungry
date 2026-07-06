@@ -437,7 +437,7 @@ h3 {
 .process-steps {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
 
@@ -629,7 +629,18 @@ h3 {
 .contact-note {
     margin-top: 1.25rem !important;
     font-size: 0.85rem !important;
-    opacity: 0.45;
+    opacity: 0.65;
+}
+
+.contact-note a {
+    color: var(--warm-white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.contact-note a:hover {
+    color: #fff;
+    opacity: 1;
 }
 
 /* Footer */
