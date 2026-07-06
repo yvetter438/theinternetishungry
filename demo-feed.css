@@ -1,0 +1,147 @@
+/* TikTok-style vertical video menu feed */
+
+.feed {
+    height: 100dvh;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.feed::-webkit-scrollbar {
+    display: none;
+}
+
+.slide {
+    position: relative;
+    height: 100dvh;
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    background: #000;
+    overflow: hidden;
+}
+
+.slide video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15) 0%,
+        transparent 35%,
+        transparent 55%,
+        rgba(0, 0, 0, 0.88) 100%
+    );
+    pointer-events: none;
+}
+
+.slide-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 1.25rem 1.25rem max(2.5rem, calc(env(safe-area-inset-bottom) + 1.5rem));
+    pointer-events: auto;
+}
+
+.dish-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.order-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: #fff;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.order-btn:active {
+    transform: scale(0.97);
+}
+
+.order-btn:hover {
+    background: var(--cream);
+}
+
+.order-btn--disabled {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+}
+
+.feed-empty {
+    min-height: 100dvh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 4rem 1.5rem;
+    text-align: center;
+    background: var(--cream);
+    color: var(--ink-soft);
+}
+
+.feed-empty h2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--ink);
+}
+
+.feed-empty p {
+    font-size: 0.9rem;
+    max-width: 300px;
+}
+
+.feed-empty code {
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    background: rgba(28, 25, 23, 0.06);
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    color: var(--ink);
+}
+
+/* Hide studio credit when feed is active — info overlay covers bottom */
+body.has-feed .demo-credit {
+    display: none;
+}
+
+@media (min-width: 520px) {
+    body.has-feed {
+        background: #111;
+    }
+
+    .feed {
+        max-width: 430px;
+        margin: 0 auto;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+}

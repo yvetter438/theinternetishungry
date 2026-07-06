@@ -1,28 +1,38 @@
 /**
- * Demo mockup videos — each file includes the phone frame + white border.
- * Drop new .mov / .mp4 files in demos/ and add an entry below.
+ * Landing page + live demo config
+ *
+ * Each demo has a slug — the live product lives at /{slug}/
+ * e.g. theinternetishungry.com/chuan-hause/
  */
 const demos = [
     {
         title: "Chuan Hause",
+        slug: "chuan-hause",
         description: "Video menu · mobile scroll",
         src: "demos/mockup-1.mp4"
     },
     {
         title: "Shake & Stack Burgers",
+        slug: "shake-and-stack-burgers",
         description: "Video menu · dish spotlight",
         src: "demos/mockup-2.mp4"
     },
     {
         title: "Thai 2go",
+        slug: "thai-2go",
         description: "Video menu · full experience",
         src: "demos/mockup-3.mp4"
     }
 ];
 
 const heroDemo = {
+    slug: "chuan-hause",
     src: "demos/mockup-1.mp4"
 };
+
+function demoUrl(slug) {
+    return `/${slug}/`;
+}
 
 function createVideoElement(videoConfig, placeholderLabel, preload = "metadata") {
     const video = document.createElement("video");
@@ -65,27 +75,41 @@ function renderWorkGrid() {
         const card = document.createElement("article");
         card.className = "work-card";
 
-        const meta = document.createElement("div");
-        meta.className = "work-card-meta";
-        meta.innerHTML = `<h3>${demo.title}</h3><p>${demo.description}</p>`;
+        const link = document.createElement("a");
+        link.className = "work-card-link";
+        link.href = demoUrl(demo.slug);
+        link.setAttribute("aria-label", `Try live demo: ${demo.title}`);
 
         const label = demo.src ? demo.title : `Upload demo ${String(i + 1).padStart(2, "0")}`;
-        const mockup = createMockup({ src: demo.src, poster: demo.poster }, label);
+        link.appendChild(createMockup({ src: demo.src, poster: demo.poster }, label));
 
-        card.appendChild(mockup);
-        card.appendChild(meta);
+        const meta = document.createElement("div");
+        meta.className = "work-card-meta";
+        meta.innerHTML = `
+            <h3>${demo.title}</h3>
+            <p>${demo.description}</p>
+            <span class="work-card-cta">Try live demo →</span>
+        `;
+
+        link.appendChild(meta);
+        card.appendChild(link);
         grid.appendChild(card);
     });
 }
 
 function renderHeroVideo() {
     const heroMockup = document.getElementById("heroMockup");
+    const heroLink = document.getElementById("heroDemoLink");
     if (!heroMockup) return;
 
     heroMockup.innerHTML = "";
     heroMockup.appendChild(
         createVideoElement(heroDemo, "Video menu demo", "auto")
     );
+
+    if (heroLink && heroDemo.slug) {
+        heroLink.href = demoUrl(heroDemo.slug);
+    }
 }
 
 function initNav() {
