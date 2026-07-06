@@ -8,19 +8,16 @@ const demos = [
     {
         title: "Chuan Hause",
         slug: "chuan-hause",
-        description: "Video menu · mobile scroll",
         src: "demos/mockup-1.mp4"
     },
     {
         title: "Shake & Stack Burgers",
         slug: "shake-and-stack-burgers",
-        description: "Video menu · dish spotlight",
         src: "demos/mockup-2.mp4"
     },
     {
         title: "Thai 2go",
         slug: "thai-2go",
-        description: "Video menu · full experience",
         src: "demos/mockup-3.mp4"
     }
 ];
@@ -78,7 +75,7 @@ function renderWorkGrid() {
         const link = document.createElement("a");
         link.className = "work-card-link";
         link.href = demoUrl(demo.slug);
-        link.setAttribute("aria-label", `Try live demo: ${demo.title}`);
+        link.setAttribute("aria-label", `View menu: ${demo.title}`);
 
         const label = demo.src ? demo.title : `Upload demo ${String(i + 1).padStart(2, "0")}`;
         link.appendChild(createMockup({ src: demo.src, poster: demo.poster }, label));
@@ -87,8 +84,8 @@ function renderWorkGrid() {
         meta.className = "work-card-meta";
         meta.innerHTML = `
             <h3>${demo.title}</h3>
-            <p>${demo.description}</p>
-            <span class="work-card-cta">Try live demo →</span>
+            ${demo.description ? `<p>${demo.description}</p>` : ""}
+            <span class="work-card-cta">View menu →</span>
         `;
 
         link.appendChild(meta);
