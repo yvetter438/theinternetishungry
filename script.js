@@ -132,9 +132,50 @@ function initFooter() {
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 }
 
+const taglineWords = [
+    { text: "cuisine", color: "#c45a28" },
+    { text: "food", color: "#d4732a" },
+    { text: "story", color: "#a86820" },
+    { text: "culture", color: "#8b4513" }
+];
+
+function initTaglineRotator() {
+    const wordEl = document.querySelector(".tagline-word");
+    if (!wordEl) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    let index = 0;
+    const duration = 2800;
+    const transitionMs = 400;
+
+    function showWord(nextIndex) {
+        wordEl.classList.add("is-exiting");
+
+        setTimeout(() => {
+            const word = taglineWords[nextIndex];
+            wordEl.textContent = word.text;
+            wordEl.style.color = word.color;
+            wordEl.classList.remove("is-exiting");
+            wordEl.classList.add("is-entering");
+
+            requestAnimationFrame(() => {
+                wordEl.classList.remove("is-entering");
+            });
+        }, transitionMs);
+    }
+
+    setInterval(() => {
+        index = (index + 1) % taglineWords.length;
+        showWord(index);
+    }, duration);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderHeroVideo();
     renderWorkGrid();
     initNav();
     initFooter();
+    initTaglineRotator();
 });
