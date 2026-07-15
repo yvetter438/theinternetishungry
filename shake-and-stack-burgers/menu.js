@@ -12,14 +12,6 @@ window.MENU_CONFIG = {
             video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/1762219646889_jdmqaj.mov"
         },
         {
-            name: "Chocolate Shake",
-            video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/1762219707750_plblnd.mov"
-        },
-        {
-            name: "Strawberry Shake",
-            video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/1762219774857_33y3b2.mov"
-        },
-        {
             name: "Shroom Stack and Fries",
             video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/1762219895063_mx7awt.mov"
         },
