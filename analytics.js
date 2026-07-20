@@ -100,25 +100,19 @@
         return attribution;
     }
 
+    function getConfig() {
+        return window.ANALYTICS_CONFIG || {};
+    }
+
     function isConfigured() {
-        const key = analyticsConfig.posthogKey;
+        const key = getConfig().posthogKey;
         return Boolean(key && !key.includes("YOUR_KEY"));
     }
 
-    function initPostHog() {
+    function getPostHogClient() {
         if (!isConfigured() || typeof posthog === "undefined") {
-            if (!isConfigured()) {
-                console.warn("[analytics] Add your PostHog key to analytics-config.js");
-            }
             return null;
         }
-
-        posthog.init(analyticsConfig.posthogKey, {
-            api_host: analyticsConfig.posthogHost || "https://us.i.posthog.com",
-            person_profiles: "identified_only",
-            capture_pageview: false
-        });
-
         return posthog;
     }
 
@@ -142,7 +136,12 @@
 
     function init() {
         const attribution = parseAttribution();
-        const client = initPostHog();
+        const client = getPostHogClient();
+
+        if (!client && !isConfigured()) {
+            console.warn("[analytics] Add your PostHog key to analytics-config.js");
+        }
+
         const context = trackMenuOpened(client, attribution);
 
         window.MenuAnalytics = {
