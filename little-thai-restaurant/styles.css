@@ -152,25 +152,23 @@ body {
     justify-content: flex-start;
     gap: clamp(2rem, 6vh, 3rem);
     padding: max(2.5rem, calc(env(safe-area-inset-top) + 1.5rem)) 1.75rem
-        calc(clamp(5.5rem, 14vh, 8.5rem) + env(safe-area-inset-bottom, 0px));
+        calc(clamp(6.5rem, 18vh, 10rem) + env(safe-area-inset-bottom, 0px));
     overflow: hidden;
 }
 
 .end-card__decor {
     position: absolute;
     inset: auto 0 0;
-    height: clamp(72px, 14vh, 110px);
+    width: 100%;
+    line-height: 0;
     pointer-events: none;
+    color: var(--lt-green);
 }
 
 .end-card__swirl {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    display: block;
     width: 100%;
-    height: 100%;
-    color: var(--lt-green);
-    transform: scaleY(-1);
+    height: auto;
 }
 
 .end-card__brand {
