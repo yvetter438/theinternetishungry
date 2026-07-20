@@ -117,18 +117,46 @@
     function createEndCard() {
         const slide = document.createElement("article");
         slide.className = "slide slide--end";
-        slide.setAttribute("aria-label", "View full menu or order takeout");
+        slide.setAttribute("aria-label", "Little Thai Restaurant — view full menu");
 
         const card = document.createElement("div");
         card.className = "end-card";
 
+        const brand = document.createElement("div");
+        brand.className = "end-card__brand";
+        const logo = document.createElement("div");
+        logo.className = "end-card__logo";
+        logo.setAttribute("role", "img");
+        logo.setAttribute("aria-label", "Little Thai Restaurant");
+        brand.appendChild(logo);
+        card.appendChild(brand);
+
         const actions = document.createElement("div");
         actions.className = "end-card-actions";
-
         actions.appendChild(createEndLink("View full menu", config.menuUrl));
-        actions.appendChild(createEndLink("Order takeout", config.takeoutUrl));
-
         card.appendChild(actions);
+
+        const decor = document.createElement("div");
+        decor.className = "end-card__decor";
+        decor.setAttribute("aria-hidden", "true");
+        decor.innerHTML = `
+            <svg class="end-card__swirl" viewBox="0 0 400 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="
+                    M0,0 H400 V120 H0 Z
+                    M0,0
+                    C48,0 78,18 72,48
+                    C66,78 28,88 34,118
+                    L0,118 Z
+                    M0,0
+                    C16,0 28,8 32,20
+                    C36,32 28,44 16,46
+                    C6,48 0,38 0,26
+                    Z
+                " fill-rule="evenodd"/>
+            </svg>
+        `;
+        card.appendChild(decor);
+
         slide.appendChild(card);
         return slide;
     }

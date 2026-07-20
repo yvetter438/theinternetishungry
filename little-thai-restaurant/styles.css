@@ -131,32 +131,89 @@ body {
     pointer-events: none;
 }
 
+:root {
+    --lt-green: #4a9b8f;
+}
+
 .slide--end {
     background: #fff;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    padding: 2rem 1.5rem max(2rem, env(safe-area-inset-bottom));
+    padding: 0;
 }
 
 .end-card {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(2rem, 6vh, 3rem);
+    padding: max(2.5rem, calc(env(safe-area-inset-top) + 1.5rem)) 1.75rem
+        calc(clamp(5.5rem, 14vh, 8.5rem) + env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+}
+
+.end-card__decor {
+    position: absolute;
+    inset: auto 0 0;
+    height: clamp(72px, 14vh, 110px);
+    pointer-events: none;
+}
+
+.end-card__swirl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--lt-green);
+    transform: scaleY(-1);
+}
+
+.end-card__brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.end-card__logo {
+    width: min(88vw, 340px);
+    aspect-ratio: 315 / 150;
+    background-color: var(--lt-green);
+    -webkit-mask-image: url("logo.png");
+    mask-image: url("logo.png");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.end-card-actions {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 320px;
     text-align: center;
 }
 
-.end-card-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
 .end-card-link {
     display: block;
-    font-size: clamp(1.35rem, 5vw, 1.65rem);
+    font-size: clamp(1.45rem, 5.5vw, 1.85rem);
     font-weight: 600;
     line-height: 1.3;
-    color: #1b7a3d;
+    color: var(--lt-green);
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
 }
