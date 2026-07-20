@@ -15,10 +15,6 @@ window.MENU_CONFIG = {
             video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/Thai2Go_Crispy_Thai_Chicken_Wings.mp4"
         },
         {
-            name: "Green Tea",
-            video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/Thai2Go_Green_Tea.mp4"
-        },
-        {
             name: "Krapow w/ Pork",
             video: "https://idcjvxdjqgjihnxtsiiz.supabase.co/storage/v1/object/public/posts-videos/Thai2Go_Krapoaw_w_Pork.mp4"
         },
