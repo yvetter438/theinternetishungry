@@ -106,7 +106,7 @@
     }
 
     function createOrderButton(url) {
-        const label = "Order now";
+        const label = config.ctaLabel || "Order now";
 
         if (url) {
             const link = document.createElement("a");
