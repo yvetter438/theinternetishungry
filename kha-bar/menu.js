@@ -7,6 +7,7 @@ window.MENU_CONFIG = {
     libraryId: "707169",
     showOrderButton: true,
     ctaLabel: "Full menu",
+    logo: "logo.webp",
     videos: [
         { id: "0273323b-32ec-496a-a59f-7018ed7c91a6", name: "M18 - Mutton Curry" },
         { id: "32d51bd1-38a7-4222-b4d5-e619f0f0c567", name: "M6 - Chhanar Dalna (Cottage Cheese Kofta)" },

@@ -144,54 +144,43 @@
         const brand = document.createElement("div");
         brand.className = "end-card__brand";
 
-        if (config.logo) {
-            const logo = document.createElement("div");
-            logo.className = "end-card__logo";
-            logo.setAttribute("role", "img");
-            logo.setAttribute("aria-label", restaurantName);
-            brand.appendChild(logo);
-        } else {
-            const name = document.createElement("h1");
-            name.className = "end-card__name";
-            name.textContent = restaurantName;
-            brand.appendChild(name);
-        }
+        const logo = document.createElement("img");
+        logo.className = "end-card__logo";
+        logo.src = config.logo || "logo.webp";
+        logo.alt = restaurantName;
+        brand.appendChild(logo);
 
         card.appendChild(brand);
 
         const actions = document.createElement("div");
-        actions.className = "end-card-actions";
-        actions.appendChild(createEndLink("View full menu", config.menuUrl));
+        actions.className = "end-card__actions";
+        actions.appendChild(createEndButton("View full menu", config.menuUrl));
         card.appendChild(actions);
-
-        const decor = document.createElement("div");
-        decor.className = "end-card__decor";
-        decor.setAttribute("aria-hidden", "true");
-        decor.innerHTML = `
-            <svg class="end-card__swirl" xmlns="http://www.w3.org/2000/svg" viewBox="0 800 810 640" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-                <path fill="currentColor" d="M 863.769531 1440.027344 L 0.488281 1440.027344 C 0.488281 1328.75 0.488281 1217.472656 0.488281 1106.179688 C 37.335938 1097.476562 90.460938 1091.121094 145.8125 1110.375 C 235.265625 1141.46875 233.816406 1205.765625 306.433594 1227.710938 C 405.972656 1257.769531 453.347656 1150.429688 578.800781 1173.238281 C 654.09375 1186.929688 673.828125 1232.269531 739.4375 1225.105469 C 795.207031 1219.007812 837.058594 1180.109375 863.75 1148.097656 C 863.769531 1245.40625 863.769531 1342.71875 863.769531 1440.027344 Z"/>
-                <path fill="currentColor" d="M 96.34375 883.105469 C 144.621094 962.742188 113.042969 1063.125 124.320312 1150.285156 C 136.472656 1244.265625 198.675781 1307.714844 271.257812 1358.996094 L 0.0078125 1358.996094 L 0.0078125 809.644531 C 39.527344 822.175781 75.027344 847.957031 96.34375 883.105469 Z"/>
-            </svg>
-        `;
-        card.appendChild(decor);
 
         slide.appendChild(card);
         return slide;
     }
 
-    function createEndLink(label, url) {
+    function createEndButton(label, url) {
         if (url) {
             const link = document.createElement("a");
-            link.className = "end-card-link";
+            link.className = "end-card-btn";
             link.href = url;
             link.target = "_blank";
             link.rel = "noopener noreferrer";
             link.textContent = label;
+            link.addEventListener("click", function () {
+                if (window.MenuAnalytics) {
+                    window.MenuAnalytics.capture("menu_clicked", {
+                        menu_url: url
+                    });
+                }
+            });
             return link;
         }
 
         const span = document.createElement("span");
-        span.className = "end-card-link end-card-link--pending";
+        span.className = "end-card-btn end-card-btn--disabled";
         span.textContent = label;
         return span;
     }
