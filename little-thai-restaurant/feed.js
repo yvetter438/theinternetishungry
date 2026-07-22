@@ -73,7 +73,7 @@
 
         if (config.showOrderButton !== false) {
             const orderUrl = video.orderUrl || config.takeoutUrl || config.menuUrl;
-            info.appendChild(createOrderButton(orderUrl));
+            info.appendChild(createOrderButton(orderUrl, index));
         }
 
         const overlay = document.createElement("div");
@@ -86,7 +86,7 @@
         return overlay;
     }
 
-    function createOrderButton(url) {
+    function createOrderButton(url, slideIndex) {
         const label = "Order now";
 
         if (url) {
@@ -97,10 +97,12 @@
             link.rel = "noopener noreferrer";
             link.textContent = label;
             link.addEventListener("click", function () {
-                if (window.MenuAnalytics) {
-                    window.MenuAnalytics.capture("order_clicked", {
-                        order_url: url
-                    });
+                const payload = { order_url: url };
+                if (typeof slideIndex === "number") {
+                    payload.slide_index = slideIndex;
+                }
+                if (feedAnalytics) {
+                    feedAnalytics.trackOrderClick(payload);
                 }
             });
             return link;
@@ -159,6 +161,14 @@
             link.target = "_blank";
             link.rel = "noopener noreferrer";
             link.textContent = label;
+            link.addEventListener("click", function () {
+                if (feedAnalytics) {
+                    feedAnalytics.trackEndCardClick({
+                        button_label: label,
+                        menu_url: url
+                    });
+                }
+            });
             return link;
         }
 
@@ -178,6 +188,10 @@
 
     preloadAround(0);
 
+    const feedAnalytics = window.FeedAnalytics
+        ? window.FeedAnalytics.create(feed, slides, videos)
+        : null;
+
     const preloadObserver = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
@@ -188,24 +202,31 @@
         { root: feed, rootMargin: "100% 0px 100% 0px", threshold: 0 }
     );
 
-    const activeObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
-
-                const index = Number(entry.target.dataset.slideIndex);
-                if (!Number.isNaN(index)) {
-                    preloadAround(index);
-                }
-            });
-        },
-        { root: feed, threshold: [0.5] }
-    );
-
     slides.forEach((slide) => {
         if (slide.dataset.videoId) {
             preloadObserver.observe(slide);
         }
-        activeObserver.observe(slide);
     });
+
+    if (feedAnalytics) {
+        feedAnalytics.attach(preloadAround);
+    } else {
+        const activeObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
+
+                    const index = Number(entry.target.dataset.slideIndex);
+                    if (!Number.isNaN(index)) {
+                        preloadAround(index);
+                    }
+                });
+            },
+            { root: feed, threshold: [0.5] }
+        );
+
+        slides.forEach((slide) => {
+            activeObserver.observe(slide);
+        });
+    }
 })();
