@@ -149,9 +149,10 @@
                 return readStoredAttribution() || attribution;
             },
             capture: function (eventName, properties) {
-                if (!client) return;
+                const activeClient = getPostHogClient();
+                if (!activeClient) return;
 
-                client.capture(eventName, {
+                activeClient.capture(eventName, {
                     restaurant: context.restaurant,
                     restaurant_name: context.restaurant_name,
                     ...attribution,

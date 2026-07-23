@@ -31,14 +31,15 @@
             if (!config.posthogKey || config.posthogKey.indexOf("YOUR_KEY") !== -1) return;
             posthog.init(config.posthogKey, {
                 api_host: config.posthogHost || "https://us.i.posthog.com",
-                defaults: "2026-05-30",
                 person_profiles: "identified_only",
-                capture_pageview: false
+                capture_pageview: false,
+                autocapture: false,
+                capture_performance: false
             });
         })();
     </script>
     <script src="/analytics.js"></script>
-    <script src="/feed-analytics.js"></script>
+    <script src="/feed-scroll-analytics.js"></script>
     <script src="feed.js"></script>
 </body>
 </html>

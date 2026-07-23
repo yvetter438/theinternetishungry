@@ -12,6 +12,12 @@
 
     const PRELOAD_AHEAD = 2;
 
+    function trackEvent(eventName, properties) {
+        if (window.MenuAnalytics) {
+            window.MenuAnalytics.capture(eventName, properties);
+        }
+    }
+
     function embedUrl(videoId) {
         const params = "autoplay=true&loop=true&muted=true&preload=true&responsive=true";
         return `https://player.mediadelivery.net/embed/${config.libraryId}/${videoId}?${params}`;
@@ -73,7 +79,7 @@
 
         if (config.showOrderButton !== false) {
             const orderUrl = video.orderUrl || config.takeoutUrl || config.menuUrl;
-            info.appendChild(createOrderButton(orderUrl, index));
+            info.appendChild(createOrderButton(orderUrl, video, index));
         }
 
         const overlay = document.createElement("div");
@@ -86,7 +92,7 @@
         return overlay;
     }
 
-    function createOrderButton(url, slideIndex) {
+    function createOrderButton(url, video, slideIndex) {
         const label = "Order now";
 
         if (url) {
@@ -97,13 +103,14 @@
             link.rel = "noopener noreferrer";
             link.textContent = label;
             link.addEventListener("click", function () {
-                const payload = { order_url: url };
-                if (typeof slideIndex === "number") {
-                    payload.slide_index = slideIndex;
-                }
-                if (feedAnalytics) {
-                    feedAnalytics.trackOrderClick(payload);
-                }
+                trackEvent("order_clicked", {
+                    order_url: url,
+                    button_label: label,
+                    slide_index: slideIndex,
+                    slide_position: slideIndex + 1,
+                    video_id: video?.id || null,
+                    video_name: video?.name || `Dish #${slideIndex + 1}`
+                });
             });
             return link;
         }
@@ -162,12 +169,11 @@
             link.rel = "noopener noreferrer";
             link.textContent = label;
             link.addEventListener("click", function () {
-                if (feedAnalytics) {
-                    feedAnalytics.trackEndCardClick({
-                        button_label: label,
-                        menu_url: url
-                    });
-                }
+                trackEvent("end_card_clicked", {
+                    button_label: label,
+                    menu_url: url,
+                    click_source: "end_card"
+                });
             });
             return link;
         }
@@ -188,10 +194,6 @@
 
     preloadAround(0);
 
-    const feedAnalytics = window.FeedAnalytics
-        ? window.FeedAnalytics.create(feed, slides, videos)
-        : null;
-
     const preloadObserver = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
@@ -202,31 +204,28 @@
         { root: feed, rootMargin: "100% 0px 100% 0px", threshold: 0 }
     );
 
+    const activeObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
+
+                const index = Number(entry.target.dataset.slideIndex);
+                if (!Number.isNaN(index)) {
+                    preloadAround(index);
+                }
+            });
+        },
+        { root: feed, threshold: [0.5] }
+    );
+
     slides.forEach((slide) => {
         if (slide.dataset.videoId) {
             preloadObserver.observe(slide);
         }
+        activeObserver.observe(slide);
     });
 
-    if (feedAnalytics) {
-        feedAnalytics.attach(preloadAround);
-    } else {
-        const activeObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
-
-                    const index = Number(entry.target.dataset.slideIndex);
-                    if (!Number.isNaN(index)) {
-                        preloadAround(index);
-                    }
-                });
-            },
-            { root: feed, threshold: [0.5] }
-        );
-
-        slides.forEach((slide) => {
-            activeObserver.observe(slide);
-        });
+    if (window.FeedScrollAnalytics) {
+        window.FeedScrollAnalytics.attach(feed, videos, config.libraryId);
     }
 })();
