@@ -17,7 +17,7 @@ window.MENU_CONFIG = {
         { id: "aad0b6ca-5cc6-47b6-95e0-2774987956cc", name: "M69 - Jhuri Alu Bhaja" },
         { id: "0273323b-32ec-496a-a59f-7018ed7c91a6", name: "M18 - Mutton Curry" },
         { id: "32d51bd1-38a7-4222-b4d5-e619f0f0c567", name: "M7 - Green Banana Kofta Curry" },
-        { id: "dd8e75bd-30e2-4e68-997d-32cbd0ba8826", name: "M8 - Anchor Kosha / Green Jackfruit Curry" },
+        { id: "dd8e75bd-30e2-4e68-997d-32cbd0ba8826", name: "M8 - Enchor Kosha / Green Jackfruit Curry" },
         { id: "600d4072-1862-403b-97b6-2da65e1b4739", name: "M16 - House Special Chicken Curry" },
         { id: "924c3314-1b8f-47f6-8306-88b84739f6be", name: "M6 - Chhanar Dalna (Cottage Cheese Kofta)" },
         { id: "780aee16-f8ef-4407-95e9-3c31a86788e3", name: "M5 - Luchi & Cholar Dal" },
