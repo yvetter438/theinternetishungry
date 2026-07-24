@@ -28,7 +28,7 @@ window.MENU_CONFIG = {
         { id: "0612bdfb-fcd0-4c64-b3bf-c8a9499ec75b", name: "M52 - Garlic Naan" },
         { id: "92827675-ff35-4af7-a61b-06b9002203e1", name: "D5 - Misti Doi" },
         { id: "6fdbcec7-aee9-4257-a26e-28d7286e902a", name: "D4 - Balusai" },
-        { id: "87f5488f-3660-4f03-94e7-1e010c73cde0", name: "D12, D13 - Mango Lassi, Gondhoraj Ghol & Aam Pora Sharbat" }
+        { id: "87f5488f-3660-4f03-94e7-1e010c73cde0", name: "D11, D12, D13 - Mango Lassi, Gondhoraj Ghol & Aam Pora Sharbat" }
     ],
     menuUrl: "https://khabarseattle.com/menu/",
     takeoutUrl: "https://khabarseattle.com/menu/"
